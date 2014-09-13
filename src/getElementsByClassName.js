@@ -24,7 +24,6 @@ var getElementsByClassName = function(className, rootNode){
   // If life was easy, we could just do things the easy way:
   // return _.flatten(results);
   return flatten(results);
-
 };
 
 var nodeHasClass = function(node, className){
