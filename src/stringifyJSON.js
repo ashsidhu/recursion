@@ -26,13 +26,15 @@ var stringifyJSON = function(obj) {
       // objects
       for (var key in obj){
         value = obj[key];
-        value = stringifyJSON(value);
-        result += '"' + key + '"' + ':' + value + ',';
+        if (typeof value !== 'function' && typeof value !== 'undefined'){
+          value = stringifyJSON(value);
+          result += '"' + key + '"' + ':' + value + ',';
+        }
       }
       if (result[result.length - 1] === ','){
         result = result.slice(0, -1);
       }
-      result = "{" + result + "}";
+      result = '{' + result + '}';
       console.log(result);
     }
     return result;
