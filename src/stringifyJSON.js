@@ -4,22 +4,45 @@
 // but you don't so you're going to write it from scratch:
 var stringifyJSON = function(obj) {
   // your code goes here
-  var result = "";
+  
+  // cases: objects, arrays and null
+  if (typeof obj === 'object'){
+    var result = "";
+    if (obj === null){
+      result += obj;
+    } else if (Array.isArray(obj)) {
+      // arrays
+      for (var i = 0; i < obj.length; i++){
+        value = stringifyJSON(obj[i]);
+        result += value + ',';
+      }
 
-  for (var key in obj){
-    value = obj[key];
-    if (typeof value === 'object'){
-      value = stringifyJSON(value);
+      if (result[result.length - 1] === ','){
+        result = result.slice(0, -1);
+      }
+
+      result = '[' + result + ']';
     } else {
-      value = '"' + value + '"';
+      // objects
+      for (var key in obj){
+        value = obj[key];
+        value = stringifyJSON(value);
+        result += '"' + key + '"' + ':' + value + ',';
+      }
+      if (result[result.length - 1] === ','){
+        result = result.slice(0, -1);
+      }
+      result = "{" + result + "}";
+      console.log(result);
     }
-    result += '"' + key + '"' + ':' + value;
-    result += ',';
+    return result;
+  } else if (typeof obj === 'number' || typeof obj === 'boolean'){
+    return obj.toString();
+  } else if (typeof obj === 'string'){
+    return '"' + obj + '"';
+  } else if (typeof obj === 'function'){
+    return undefined;
+  } else{
+    return undefined;
   }
-  if (result[result.length - 1] === ','){
-    result = result.slice(0, -1);
-  }
-  result = "{" + result + "}";
-  console.log(result);
-  return result;
 };
