@@ -26,16 +26,18 @@ var stringifyJSON = function(obj) {
       // objects
       for (var key in obj){
         value = obj[key];
+
         if (typeof value !== 'function' && typeof value !== 'undefined'){
           value = stringifyJSON(value);
           result += '"' + key + '"' + ':' + value + ',';
         }
       }
+      
       if (result[result.length - 1] === ','){
         result = result.slice(0, -1);
       }
+      
       result = '{' + result + '}';
-      console.log(result);
     }
     return result;
   } else if (typeof obj === 'number' || typeof obj === 'boolean'){
@@ -44,7 +46,7 @@ var stringifyJSON = function(obj) {
     return '"' + obj + '"';
   } else if (typeof obj === 'function'){
     return undefined;
-  } else{
+  } else {
     return undefined;
   }
 };
